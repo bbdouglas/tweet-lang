@@ -1,0 +1,30 @@
+This is a simple example of how n-grams and cosine similarity can be used to 
+statistically detect language. The system is designed to work with Twitter,
+and has rudimentary support for twitter metadata and formatting. However, the
+technique could be easily adopted to other domains.
+
+Since each tweet has an associated user profile language, the application of
+guessing what language a tweet is in is rather academic. The more practical use
+is for detecting when a tweet is not written in the designated profile language,
+which actually happens quite often. The idea would be to gather tweets from a
+single profile language, with the assumption being that the majority are, in
+fact, in that language. The similarity metric can be used to identify outliers.
+
+There are two CLI python scripts: train.py and detect.py. train.py is run over
+a set of json-formatted tweet files, each file corresponding to one profile
+language, and produces a language model. detect.py uses the model to predict the
+language of new tweets. The language detection is done purely on the text of the
+tweet, without any help from the tweet metadata. The following represents sample
+usage of the scripts.
+
+    $ ./train.py en.json de.json ja.json 
+    processing en.json...
+    processing de.json...
+    processing ja.json...
+    model written to langid.model
+    $ ./detect.py langid.model "Go #Giants! Beat the #Tigers"
+    en
+
+For more background, see the blog posts and demos at:
+
+    http://blog.bbdouglas.com
